@@ -1,34 +1,28 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/navbar/Navbar';
-import Register from './components/register/register';
-import Login from './components/login/login';
-import DoctorRegister from './components/DoctorSignUp/DoctorSignUp';
+import './App.css'
+
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+
+import DocLogin from './components/DocLogin/DocLogin'
+import DocSchedules from './components/DocSchedules/DocSchedules'
+import Login from './components/login/login'
+import Navbar from './components/navbar/Navbar'
+import Register from './components/register/register'
 
 function App() {
   return (
-<div className="Marham-app">
-      
-
-<Router>
-<Navbar />
-<DoctorRegister/>
-      <Routes>
-      {/* <Route path="/" element={<Register/>} />  */}
-     <Route path="/login" element={<Login />} />
-     <Route path='/register' element={<Register/>}/> 
-      </Routes>
-    </Router>
-
-
-
-
-</div>
-
-
-
-  );
+    <div className="">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/DocLogin" element={<DocLogin />} />
+          <Route path="/DocScheduleSlot" element={<DocSchedules />} />
+        </Routes>
+      </Router>
+    </div>
+  )
 }
 
-export default App;
-
+export default App

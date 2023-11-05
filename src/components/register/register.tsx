@@ -8,57 +8,18 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from 'react-router-dom';
 
+library.add(faEye, faEyeSlash)
 
+export default function Register() {
 
-library.add(faEye,faEyeSlash)
-
-
-export default function Register(){
-
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [password, setPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-    // function togglePasswordVisibility(e) {
-    //   e.preventDefault();
-    //   setIsPasswordVisible((prevState) => !prevState);
-    // }
-
-    function togglePasswordVisibility(e: React.MouseEvent<HTMLButtonElement>) {
-      e.preventDefault();
-      setIsPasswordVisible((prevState) => !prevState);
-    }
-
-    const [user_Name, setUser_Name] = useState('');
-    const [user_Email,setUser_Email] = useState('');
-    const [user_Password, setUser_Password] = useState('');
-
-    const Post_User_info_into_db = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/post_user', {
-          method: 'POST',
-          body: JSON.stringify({
-           
-            user_name:user_Name,
-            user_email:user_Email,
-            user_password:user_Password
-          }),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-          }
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log(data);  
-  
-  
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  function togglePasswordVisibility(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setIsPasswordVisible((prevState) => !prevState);
+  }
 
 
 
@@ -71,7 +32,7 @@ export default function Register(){
     <div className="flex items-center justify-center p-12 ml-auto mr-auto max-md:w-full max-md:p-3 ">
 
   <div className="mx-auto w-full max-w-[550px]   max-md:w-[540px]   ">
-    <form action="null" method="POST" onSubmit={Post_User_info_into_db} className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
+    <form action="https://formbold.com/s/FORM_ID" method="POST" className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
 
 
 
@@ -98,7 +59,6 @@ export default function Register(){
               id="fName"
               placeholder="First Name"
               className="w-full rounded-md border border-[#e0e0e0] placeholder:text-xs placeholder:text-blue-400  mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-              onChange={(e) => setUser_Name(e.target.value)}
             />
           </div>
         </div>
@@ -136,7 +96,6 @@ export default function Register(){
               id="fName"
               placeholder="Enter Email here"
               className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-              onChange={(e) => setUser_Email(e.target.value)}
             />
           </div>
         </div>
@@ -198,7 +157,6 @@ export default function Register(){
             </label>
           </div>
         </div>
-        
       </div>
           {/* <div className="mb-5">
             <label
@@ -280,10 +238,7 @@ export default function Register(){
       <input
         type={isPasswordVisible ? "text" : "password"}
         placeholder="Password"
-        className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md" 
-        onChange={(e) => setUser_Password(e.target.value)}
-        />
-      
+        className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md" />
       <button
         className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
         onClick={togglePasswordVisibility}

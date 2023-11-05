@@ -13,7 +13,6 @@ function Navbar() {
       <nav className="bg-white">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
           <a href="https://flowbite.com/" className="flex items-center">
-            {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" /> */}
             <span className="self-center text-xl font-semibold text-blue-800 whitespace-nowrap">  Verde     </span>
           </a>
           <div className="flex space-x-4 md:order-2 max-fourthsmall::bg-red-800">

@@ -4,8 +4,8 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+// import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+// import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from 'react-router-dom';
 
 
@@ -13,7 +13,10 @@ import { Link } from 'react-router-dom';
 library.add(faEye,faEyeSlash)
 
 
-export default function Register(){
+export default function DoctorRegister(){
+
+
+
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [password, setPassword] = useState('');
@@ -29,55 +32,83 @@ export default function Register(){
       setIsPasswordVisible((prevState) => !prevState);
     }
 
-    const [user_Name, setUser_Name] = useState('');
-    const [user_Email,setUser_Email] = useState('');
-    const [user_Password, setUser_Password] = useState('');
+    const [doctor_Name, setDoctor_Name] = useState('');
+    const [doctor_Email,setDoctor_Email] = useState('');
+    const [doctor_Password, setDoctor_Password] = useState('');
 
-    const Post_User_info_into_db = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/post_user', {
-          method: 'POST',
-          body: JSON.stringify({
-           
-            user_name:user_Name,
-            user_email:user_Email,
-            user_password:user_Password
-          }),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
+    
+
+
+    const Post_Doctor_info_into_db = async () => {
+        try {
+          const response = await fetch('http://localhost:4000/post_doc', {
+            method: 'POST',
+            body: JSON.stringify({
+             
+              doc_name:doctor_Name,
+              doc_email:doctor_Email,
+              doc_password:doctor_Password
+            }),
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
           }
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const data = await response.json();
+          console.log(data);  
+    
+    
+        } catch (err) {
+          console.error(err);
         }
-        const data = await response.json();
-        console.log(data);  
-  
-  
-      } catch (err) {
-        console.error(err);
       }
-    }
+
+
+
 
 
 
     return(
         <div className="flex flex-row w-full h-full mt-3 bg-white maindiv">
 
+
+{/* image div      */}
+<div className="flex justify-center w-1/2 h-screen max-md:w-2/3 max-sm:hidden">
+  <div className="w-5/6 mt-12 bg-purple-400 h-3/4 max-md3:mt-[76px] max-md3:w-full max-md3:h-3/4 max-md:mt-10 max-md:h-3/5 max-lg:mt-[74px] max-xl:mt-[78px] max-2xl:mt-20  max-md2:mt-20  max-md1:mt-[75px]  " >
+    
+<img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&q=80&w=2074&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full"/>  
+
+    
+  </div>
+</div>
+
+{/* image div close */}
+
+
             
 <div className="flex flex-row w-1/2 h-full mt-3 max-md3:w-3/4 max-md:w-3/5 max-sm:w-full " >
-    
+
+
+
+
+
     <div className="flex items-center justify-center p-12 ml-auto mr-auto max-md:w-full max-md:p-3 ">
 
-  <div className="mx-auto w-full max-w-[550px]   max-md:w-[540px]   ">
-    <form action="null" method="POST" onSubmit={Post_User_info_into_db} className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
 
-
-
-    <div className="flex flex-wrap justify-center -mx-3 max-sm:ml-auto max-sm:mr-auto">
         
-       <h1 className="text-[40px] text-blue-400 mr-auto font-bold max-md:text-[35px] ">Create Account</h1>
+
+  <div className="mx-auto w-full max-w-[550px]   max-md:w-[540px]   ">
+
+    <form action="null" method="POST" onSubmit={Post_Doctor_info_into_db}   className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
+
+
+
+    <div className="flex flex-wrap justify-center -mx-3 max-sm:ml-auto max-sm:mr-auto ">
+        
+       <h1 className="text-[40px] text-blue-400 mr-auto font-bold max-md:text-[35px] max-triplesmall:text-[30px] max-md:ml-8" >Not a Doctor?</h1>
         
       </div>
 
@@ -96,11 +127,12 @@ export default function Register(){
               type="text"
               name="fName"
               id="fName"
-              placeholder="First Name"
+              placeholder="Enter Your First Name"
               className="w-full rounded-md border border-[#e0e0e0] placeholder:text-xs placeholder:text-blue-400  mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-              onChange={(e) => setUser_Name(e.target.value)}
+              onChange={(e) => setDoctor_Name(e.target.value)}
             />
           </div>
+
         </div>
         <div className="w-full px-3 sm:w-1/2">
           <div className="mb-5">
@@ -114,7 +146,7 @@ export default function Register(){
               type="text"
               name="lName"
               id="lName"
-              placeholder="Last Name"
+              placeholder="Enter Your Last Name"
               className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div>
@@ -134,9 +166,9 @@ export default function Register(){
               type="email"
               name="fName"
               id="fName"
-              placeholder="Enter Email here"
+              placeholder="Enter Your Email"
               className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-              onChange={(e) => setUser_Email(e.target.value)}
+              onChange={(e) => setDoctor_Email(e.target.value)}
             />
           </div>
         </div>
@@ -152,7 +184,7 @@ export default function Register(){
               type="text"
               name="lName"
               id="lName"
-              placeholder="Enter Phone Here"
+              placeholder="Enter Your Phone Num"
               className="w-full rounded-md border placeholder:pl-2 pl-24 placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
             <Country/>
@@ -169,6 +201,7 @@ export default function Register(){
           Gender
         </label>
         <div className="flex items-center space-x-6 max-md3:space-x-4 max-sm:space-x-8">
+          
           <div className="flex items-center">
             <input
               type="radio"
@@ -183,6 +216,7 @@ export default function Register(){
               Male
             </label>
           </div>
+
           <div className="flex items-center">
             <input
               type="radio"
@@ -197,8 +231,8 @@ export default function Register(){
               Female
             </label>
           </div>
+          
         </div>
-        
       </div>
           {/* <div className="mb-5">
             <label
@@ -216,6 +250,7 @@ export default function Register(){
             />
           </div> */}
         </div>
+
         <div className="w-full px-3 sm:w-1/2 max-sm:mt-6 ">
         {/* <div className="mb-5 bg-green-500 ">
         <label className="block mb-3 text-base font-medium text-blue-400">
@@ -281,9 +316,9 @@ export default function Register(){
         type={isPasswordVisible ? "text" : "password"}
         placeholder="Password"
         className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md" 
-        onChange={(e) => setUser_Password(e.target.value)}
+        onChange={(e) => setDoctor_Password(e.target.value)}
         />
-      
+        
       <button
         className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
         onClick={togglePasswordVisibility}
@@ -306,43 +341,45 @@ export default function Register(){
 
         
       </div>
-      
+
+
+
+
+      <div className="flex flex-wrap pt-4 max-md:mx-0 max-sm:pt-4 justify-center items-center flex-row">
+  <div className="w-full flex justify-center"> 
+    <label className="flex cursor-pointer gap-2">
+      <input type="checkbox" className="checkbox mt-1"/>
+      <span className="text-blue-400">Keep me Logged in</span>
+    </label>
+  </div>
+</div>
 
     
+    
 
-      <div className="w-full ">
+    
+     
+      <div className="w-full">
         <button
           className="hover:shadow-form rounded-full mt-3 max-sm:py-2 max-md3:mt-3 w-full bg-blue-600 py-2.5 px-10 text-center text-base font-semibold text-white outline-none"
         >
-          Submit
+          Sign Up
         </button>
       </div>
-
-
-      <div className="w-full ">
-   
-      <div className="font-semibold text-blue-400 divider divider-horizontal">or</div>
-      </div>
-
-
-      <div className="flex flex-row w-full space-x-5 ">
       
-      <button className="w-3/5 py-3 ml-auto mr-auto text-sm font-semibold text-white bg-orange-700 rounded-full max-sm:py-3 max-md:py-2"> <FontAwesomeIcon icon={faGoogle} className="mr-2" />Login through Google</button>
-      <button className="w-3/5 py-3 ml-auto mr-auto text-sm font-semibold text-white bg-blue-800 rounded-full max-sm:py-3 max-md:py-2"> <FontAwesomeIcon icon={faFacebook} className="mr-2" />Login through Facebook</button>
-      
-      </div>
 
 
       
+      <div className="flex flex-row w-full ml-4">
       
-      <div className="flex flex-row w-full space-x-5 ">
-      
-     <p className="ml-auto mr-auto font-semibold text-blue-400 max-md:pt-2">Already a Member<Link to="/login"  className="ml-2 text-blue-400 underline cursor-pointer text-semibold hover:text-blue-950">Click here</Link></p>
+     <p className="ml-auto mr-auto font-semibold text-blue-400 max-md:pt-2 mt-4 max-md:ml-20 max-sm:ml-32 max-xs:ml-16 max-doublesmall:ml-12 max-fourthsmall:ml-8 max-fifthsmall:ml-4">Already have an account?<Link to="/login"  className="ml-2 text-blue-400 underline cursor-pointer text-semibold hover:text-blue-950">Log In</Link></p>
       </div>
 
       
     </form>
   </div>
+
+
 </div>
 
 
@@ -352,14 +389,7 @@ export default function Register(){
 </div>
         
 
-<div className="flex justify-center w-1/2 h-screen max-md:w-2/3 max-sm:hidden">
-  <div className="w-5/6 mt-12 bg-purple-400 h-3/4 max-md3:mt-7 max-md3:w-full max-md3:h-3/4 max-md:mt-14 max-md:h-3/5" >
-    
-<img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&q=80&w=2074&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full h-full"/>  
 
-    
-  </div>
-</div>
 
 
 

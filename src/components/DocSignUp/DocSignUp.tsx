@@ -137,7 +137,7 @@ const DocSignUp = () => {
                                         type="text"
                                         name="fName"
                                         id="fName"
-                                        placeholder="Select Your Gender"
+                                        placeholder="First Name"
                                         className="mt-4 w-full mr-2 rounded-md border border-[#e0e0e0] bg-white text-base font-medium text-blue-700 outline-none placeholder:text-xs placeholder:text-blue-700 focus:border-[#6A64F1] focus:shadow-md"
                                     />
                                     <FontAwesomeIcon icon={faAngleDown} className='absolute  mt-8 ml-52 text-blue-800' />
@@ -396,6 +396,81 @@ const DocSignUp = () => {
                                         We charge 30% (plus GST) as transaction fee for digital branding
                                         and platform services.
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mx-auto mt-8 w-11/12 max-w-5xl rounded-xl border-2 border-blue-700 px-2 bg-white">
+                            <div className="mx-auto flex w-full flex-wrap pt-4 max-md:mx-0 max-sm:pt-4">
+                                <div className="second_last ">
+                                    <div className="-mx-3  flex flex-wrap justify-center pb-4  pl-6 pt-4 max-sm:ml-auto max-sm:mr-auto">
+                                        <h1 className="mr-auto  pl-6 text-[20px] font-bold text-blue-700">
+                                            Booking Lead Time{' '}
+                                        </h1>
+                                    </div>
+
+                                    <div className="w-full  pl-8 pt-6 ">
+                                        <div className="mb-5">
+                                            <div className="relative mt-4 w-3/5">
+                                                <label
+                                                    htmlFor="fName"
+                                                    className="absolute -mt-4 ml-5 bg-white text-base font-medium text-blue-700 max-md3:-mt-3 max-md3:text-sm max-md3:tracking-wider"
+                                                >
+                                                    Lead Team
+                                                </label>
+                                                <button
+                                                    name="fName"
+                                                    id="fName"
+                                                    className="w-full rounded-tl rounded-tr border border-gray-300 bg-white p-4 text-left text-xs font-semibold leading-4  text-blue-700 placeholder-gray-600"
+                                                >
+                                                    {gender}
+                                                </button>
+                                                <svg
+                                                    onClick={() => setMenu(!menu)}
+                                                    className={
+                                                        'absolute  right-4 top-4 transform cursor-pointer ' +
+                                                        (menu ? 'rotate-180' : '')
+                                                    }
+                                                    width="16"
+                                                    height="16"
+                                                    viewBox="0 0 16 16"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M3.5 5.75L8 10.25L12.5 5.75"
+                                                        stroke="#27272A"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                                <div
+                                                    className={
+                                                        'absolute z-10 mt-1 flex w-full flex-col justify-start bg-gray-50 text-gray-600 ' +
+                                                        (menu ? 'block' : 'hidden')
+                                                    }
+                                                >
+                                                    {genders.map((country) => (
+                                                        <div
+                                                            key={country}
+                                                            className="cursor-pointer px-4 py-2 hover:bg-gray-800 hover:text-white"
+                                                            onClick={changeText1}
+                                                        >
+                                                            {country}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="-mx-3  flex flex-wrap justify-center pb-4  pl-6 pt-4 max-sm:ml-auto max-sm:mr-auto">
+                                        <p className="flex  justify-center p-4 text-[15px] font-semibold text-blue-700 ">
+                                            Minimum Time in Advance for patients to book your
+                                            Appointments, e.g, if you set 3 hours, a patient booking at 1
+                                            PM will only see slots for 4 pm or later.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

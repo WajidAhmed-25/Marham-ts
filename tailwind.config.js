@@ -4,9 +4,6 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        // short: { raw: '(max-height: 650px)' },
-        // xshort: { raw: '(max-height: 560px)' },
-        // xxshort: { raw: '(max-height: 490px)' },
         'seventhsmall':'259px',
         'sixthsmall':'283px',
         'fifthsmall':'300px',
@@ -14,7 +11,7 @@ module.exports = {
         'triplesmall':'390px',
         'doublesmall' : '410px',
         'extrasmall':'422px',
-         'small' : '444px',
+        'small' : '444px',
         'xs' : '490px',
         'smmm':'560px',
         'smm':'661px',
@@ -26,6 +23,14 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
         '2xl': '1536px',
+      },
+      fontSize: {
+        xxs: ['10px', '14px'],
+        xs: ['12px', '16px'],
+        sm: ['14px', '20px'],
+        base: ['16px', '24px'],
+        lg: ['20px', '28px'],
+        xl: ['24px', '32px'],
       },
     },
   },

@@ -7,6 +7,7 @@ import DocSchedules from './components/DocSchedules/DocSchedules'
 import Login from './components/login/login'
 import Navbar from './components/navbar/Navbar'
 import Register from './components/register/register'
+import DoctorRegister from './components/DoctorSignUp/DoctorSignUp'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/DocLogin" element={<DocLogin />} />
+          <Route path="/DocRegister" element={<DoctorRegister/>} />
           <Route path="/DocScheduleSlot" element={<DocSchedules />} />
         </Routes>
       </Router>

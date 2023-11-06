@@ -1,7 +1,25 @@
+
+
+import { useState } from "react";
+
 export default function Country() {
+
+
+  const [selectedCode, setSelectedCode] = useState<string>(''); 
+
+  
+  const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCode(event.target.value);
+  };
+
+
+    localStorage.setItem('selectedCode', selectedCode);
+ 
+
+
   return (
     <div className="absolute mt-[-38px] ml-1 ">
-      <select id="countryCode" name="countryCode" className="block py-1 pl-2 pr-8 leading-tight text-blue-400 bg-blue-200 border-2 border-white rounded-md appearance-none focus:outline-none focus:shadow-outline">
+      <select id="countryCode" onChange={handleCountryChange}  name="countryCode" className="block py-1 pl-2 pr-8 leading-tight text-blue-400 bg-blue-200 border-2 border-white rounded-md appearance-none focus:outline-none focus:shadow-outline">
         <option value="" className="hover:bg-white" >Code</option>
         <option value="+1" className="bg-white">+1</option>
         <option value="+44" className="bg-white">+44</option>
@@ -62,6 +80,7 @@ export default function Country() {
         <option value="+65" className="bg-white">+65</option>
         <option value="+60" className="bg-white">+60</option>
       </select>
+      <p>{selectedCode}</p>
     </div>
   )
 }

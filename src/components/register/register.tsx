@@ -1,5 +1,5 @@
 import Country from "../Country_Code/country";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -7,19 +7,85 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 library.add(faEye, faEyeSlash)
 
 export default function Register() {
 
+  const navigate = useNavigate();
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  
   function togglePasswordVisibility(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setIsPasswordVisible((prevState) => !prevState);
   }
+
+
+
+  const [user_reg_first,setUser_reg_first]=useState('')
+  const [user_reg_last,setUser_reg_last]=useState('')
+  const [user_reg_email,setUser_reg_email]=useState('')
+  const [user_reg_phone,setUser_reg_phone]=useState('')
+  const [user_reg_password,setUser_reg_password]=useState('')
+
+  const storedSelectedCode = localStorage.getItem('selectedCode');
+
+  const [user_reg_gender, setUserRegGender] = useState<string>(''); 
+
+  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserRegGender(event.target.id);
+  };
+ 
+
+
+  const Post_User_Registration_info_into_db = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/post_user_registration_details', {
+        method: 'POST',
+        body: JSON.stringify({
+         
+          user_reg_first:user_reg_first,
+          user_reg_last:user_reg_last,
+          user_reg_email:user_reg_email,
+          user_reg_phone:user_reg_phone,
+          user_reg_password:user_reg_password,
+          user_reg_code:storedSelectedCode,
+          user_reg_gender:user_reg_gender,
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log(data);  
+
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    console.log(user_reg_gender)
+    console.log(storedSelectedCode)
+    await Post_User_Registration_info_into_db();
+
+   
+    navigate('/login');
+  };
 
 
 
@@ -32,7 +98,7 @@ export default function Register() {
     <div className="flex items-center justify-center p-12 ml-auto mr-auto max-md:w-full max-md:p-3 ">
 
   <div className="mx-auto w-full max-w-[550px]   max-md:w-[540px]   ">
-    <form action="https://formbold.com/s/FORM_ID" method="POST" className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
+    <form action="/login"  method="POST" className="flex flex-col space-y-7 max-sm:space-y-3 max-md3:space-y-5 max-md:space-y-4 ">
 
 
 
@@ -59,7 +125,8 @@ export default function Register() {
               id="fName"
               placeholder="First Name"
               className="w-full rounded-md border border-[#e0e0e0] placeholder:text-xs placeholder:text-blue-400  mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
+              onChange={(e) => setUser_reg_first(e.target.value)}
+          />
           </div>
         </div>
         <div className="w-full px-3 sm:w-1/2">
@@ -76,6 +143,7 @@ export default function Register() {
               id="lName"
               placeholder="Last Name"
               className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
+              onChange={(e) => setUser_reg_last(e.target.value)}
             />
           </div>
         </div>
@@ -96,7 +164,8 @@ export default function Register() {
               id="fName"
               placeholder="Enter Email here"
               className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
+              onChange={(e) => setUser_reg_email(e.target.value)}
+           />
           </div>
         </div>
         <div className="w-full px-3 sm:w-1/2">
@@ -113,7 +182,8 @@ export default function Register() {
               id="lName"
               placeholder="Enter Phone Here"
               className="w-full rounded-md border placeholder:pl-2 pl-24 placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
+              onChange={(e) => setUser_reg_phone(e.target.value)}
+           />
             <Country/>
           </div>
         </div>
@@ -123,108 +193,59 @@ export default function Register() {
       <div className="flex flex-wrap items-center justify-center -mx-3 max-md:mx-0 ">
         <div className="w-full px-3 sm:w-1/2 ">
 
-        <div className="mb-0 ">
-        <label className="block mb-5 text-base font-medium text-blue-400">
-          Gender
-        </label>
-        <div className="flex items-center space-x-6 max-md3:space-x-4 max-sm:space-x-8">
-          <div className="flex items-center">
-            <input
-              type="radio"
-              name="radio1"
-              id="radioButton1"
-              className="w-5 h-5 max-md3:h-4 max-md3:w-4"
-            />
-            <label
-              htmlFor="radioButton1"
-              className="pl-2 text-base font-medium text-blue-400 max-md3:text-sm"
-            >
-              Male
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              type="radio"
-              name="radio1"
-              id="radioButton2"
-              className="w-5 h-5 max-md3:h-4 max-md3:w-4"
-            />
-            <label
-              htmlFor="radioButton2"
-              className="pl-2 text-base font-medium text-blue-400 max-md3:text-sm"
-            >
-              Female
-            </label>
-          </div>
+     
+
+
+<div className="mb-0">
+      <label className="block mb-5 text-base font-medium text-blue-400">Gender</label>
+      <div className="flex items-center space-x-6 max-md3:space-x-4 max-sm:space-x-8">
+        <div className="flex items-center">
+          <input
+            type="radio"
+            name="gender"
+            id="Male"
+            value="Male"
+            checked={user_reg_gender === 'Male'}
+            className="w-5 h-5 max-md3:h-4 max-md3:w-4"
+            onChange={handleGenderChange}
+          />
+          <label
+            htmlFor="Male"
+            className={`pl-2 text-base font-medium text-blue-400 max-md3:text-sm`}
+          >
+            Male
+          </label>
+        </div>
+        <div className="flex items-center">
+          <input
+            type="radio"
+            name="gender"
+            id="Female"
+            value="Female"
+            checked={user_reg_gender === 'Female'}
+            className="w-5 h-5 max-md3:h-4 max-md3:w-4"
+            onChange={handleGenderChange}
+          />
+          <label
+            htmlFor="Female"
+            className={`pl-2 text-base font-medium text-blue-400 max-md3:text-sm`}
+          >
+            Female
+          </label>
         </div>
       </div>
-          {/* <div className="mb-5">
-            <label
-              htmlFor="fName"
-              className="absolute ml-5 text-base font-medium text-blue-400 bg-white"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              name="fName"
-              id="fName"
-              placeholder="Enter Email here"
-              className="w-full rounded-md border border-[#e0e0e0] mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div> */}
+      <p>{user_reg_gender}</p>
+    </div>
+
+
+
+         
         </div>
         <div className="w-full px-3 sm:w-1/2 max-sm:mt-6 ">
-        {/* <div className="mb-5 bg-green-500 ">
-        <label className="block mb-3 text-base font-medium text-blue-400">
-          Gender
-        </label>
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center">
-            <input
-              type="radio"
-              name="radio1"
-              id="radioButton1"
-              className="w-5 h-5"
-            />
-            <label
-              htmlFor="radioButton1"
-              className="pl-3 text-base font-medium text-blue-400"
-            >
-              Male
-            </label>
-          </div>
-          <div className="flex items-center">
-            <input
-              type="radio"
-              name="radio1"
-              id="radioButton2"
-              className="w-5 h-5"
-            />
-            <label
-              htmlFor="radioButton2"
-              className="pl-3 text-base font-medium text-blue-400"
-            >
-              Female
-            </label>
-          </div>
-        </div>
-      </div> */}
+       
 
 <div className="">
-            {/* <label
-              htmlFor="fName"
-              className="absolute ml-5 text-base font-medium text-blue-400 bg-white"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Password here"
-              className="w-full rounded-md border border-[#e0e0e0] mt-4 bg-white py-3 px-6 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md"
-            /> */}
+           
             {/* <PasswordInput/> */}
       
 
@@ -238,7 +259,8 @@ export default function Register() {
       <input
         type={isPasswordVisible ? "text" : "password"}
         placeholder="Password"
-        className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        className="w-full rounded-md border placeholder:text-xs placeholder:text-blue-400 border-[#e0e0e0] bg-white py-3 px-6 mt-4 text-base font-medium text-blue-400 outline-none focus:border-[#6A64F1] focus:shadow-md" 
+        onChange={(e) => setUser_reg_password(e.target.value)}/>
       <button
         className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
         onClick={togglePasswordVisibility}
@@ -256,21 +278,20 @@ export default function Register() {
          
         </div>
 
-{/* gender */}
-
-
-        
       </div>
       
 
     
 
       <div className="w-full ">
+      
         <button
           className="hover:shadow-form rounded-full mt-3 max-sm:py-2 max-md3:mt-3 w-full bg-blue-600 py-2.5 px-10 text-center text-base font-semibold text-white outline-none"
-        >
+       onClick={handleSubmit}
+       >
           Submit
         </button>
+   
       </div>
 
 

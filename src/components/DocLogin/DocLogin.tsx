@@ -84,7 +84,7 @@ const DocLogin = () => {
                             <label className="text-sm font-normal text-blue-400">
                                 Don't Have An Account?{' '}
                                 <span className="cursor-pointer text-sm font-bold text-blue-400 underline">
-                                    Sign Up
+                                 <a href="/DocRegister"> Sign Up </a>
                                 </span>
                             </label>
                         </div>
